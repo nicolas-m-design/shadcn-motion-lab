@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useId, useState } from 'react'
-import type { MotionSection } from '../routes/content'
+import type { PatternSection } from '../routes/content'
 import { useReducedMotionPreference } from './useReducedMotionPreference'
 
 type DialogVariant = 'standard' | 'snappy' | 'expressive' | 'reduced'
@@ -84,7 +84,7 @@ Deliver:
 - brief rule audit listing which shared rules were applied or intentionally overridden.`
 
 type DialogShowcaseProps = {
-  section: MotionSection
+  section: PatternSection
 }
 
 export function DialogShowcase({ section }: DialogShowcaseProps) {
@@ -102,7 +102,7 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
         <div className="component-hero__copy">
           <p className="eyebrow">{section.category}</p>
           <h1>{section.title}</h1>
-          <p className="page-lede">{section.goal}</p>
+          <p className="page-lede">{section.purpose}</p>
           <div className="meta-row">
             <span className="meta-chip">4 variants</span>
             <span className="meta-chip">Reduced motion aware</span>
@@ -293,12 +293,6 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
         </div>
       </section>
 
-      <section className="content-section">
-        <div className="doc-block">
-          <h2>Figma exploration note</h2>
-          <p>{section.figma}</p>
-        </div>
-      </section>
     </div>
   )
 }

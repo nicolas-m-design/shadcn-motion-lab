@@ -9,6 +9,29 @@ Use this file to track time for the eventual article. Keep entries factual and l
 
 ## 2026-04-23
 
+### Session 2
+
+- Start: 11:01 CEST
+- End: 11:04 CEST
+- Duration: 0h 3m
+- Milestone: IA and pattern content model
+- Work completed:
+  - Reframed the running app from component routes to pattern routes.
+  - Added six AI-native pattern entries across Observe, Review, Approve, and Recover.
+  - Kept workflow/article material out of the public app surface.
+  - Verified the production build after the route/content refactor.
+- AI helped with:
+  - Mapping the existing multi-route structure onto an early-library IA.
+  - Drafting concise pattern purposes, scenarios, states, and checks.
+  - Preserving old route compatibility without expanding scope.
+- Manual decisions:
+  - Keep the existing route-based website instead of collapsing it into a single gallery.
+  - Treat taxonomy as navigation, not public methodology.
+  - Leave older motion-spec support files for later cleanup because they are not part of the routed app.
+- Open questions:
+  - Whether the first flagship implementation should be `Approval checkpoint` or `Tool-call timeline`.
+  - Whether to rename internal component file names now or wait until the first real pattern implementation.
+
 ### Session 1
 
 - Start: 10:57 CEST
