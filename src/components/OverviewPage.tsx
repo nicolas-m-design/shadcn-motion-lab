@@ -76,7 +76,13 @@ export function OverviewPage() {
         </div>
         <div className="component-index">
           {patternSections.map(section => (
-            <Link className="index-link" key={section.slug} to={`/patterns/${section.slug}`}>
+            <Link
+              aria-label={`Open ${section.title} pattern`}
+              className="index-link"
+              data-category={section.category.toLowerCase()}
+              key={section.slug}
+              to={`/patterns/${section.slug}`}
+            >
               <div>
                 <p className="eyebrow">{section.category}</p>
                 <h3>{section.title}</h3>

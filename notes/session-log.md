@@ -9,6 +9,26 @@ Use this file to track time for the eventual article. Keep entries factual and l
 
 ## 2026-04-23
 
+### Session 3
+
+- Start: 11:12 CEST
+- End: 11:13 CEST
+- Duration: 0h 1m
+- Milestone: IA and pattern content model
+- Work completed:
+  - Applied a small visual polish pass to the current pattern-library IA.
+  - Added category-aware accents to pattern index cards.
+  - Replaced old component-shaped placeholder visuals with state-oriented pattern previews.
+  - Aligned core surface colors with `DESIGN.md` and verified the production build.
+- AI helped with:
+  - Applying the reviewed frontend and interaction-polish skills without expanding scope.
+  - Identifying a low-risk way to make placeholder routes feel more pattern-specific.
+- Manual decisions:
+  - Avoided adding new dependencies, screenshots, search, or a full gallery rebuild.
+  - Kept the polish pass focused on hierarchy and inspectability.
+- Open questions:
+  - Whether the category colors should remain visible or become more neutral after the first live demo lands.
+
 ### Session 2
 
 - Start: 11:01 CEST

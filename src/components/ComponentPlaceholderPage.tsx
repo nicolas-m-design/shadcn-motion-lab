@@ -12,7 +12,6 @@ const stageContent: Record<
     body: string
     recommended: string
     scenario: string
-    frameClassName: string
   }
 > = {
   'tool-call-timeline': {
@@ -21,7 +20,6 @@ const stageContent: Record<
     body: 'The stage will show ordered tool steps, current activity, and completed context checks while keeping the main result area calm.',
     recommended: 'Observe',
     scenario: 'Test queued, running, completed, and attention states.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--drawer',
   },
   'streaming-citations': {
     eyebrow: 'Source preview',
@@ -29,7 +27,6 @@ const stageContent: Record<
     body: 'The stage will pair incremental text reveal with source markers and a compact evidence panel that updates without disrupting reading.',
     recommended: 'Observe',
     scenario: 'Test generating, source found, source reviewed, and complete states.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--menu',
   },
   'compare-apply-review': {
     eyebrow: 'Review preview',
@@ -37,7 +34,6 @@ const stageContent: Record<
     body: 'The stage will compare current and suggested states, highlight changes, and make partial apply paths visible.',
     recommended: 'Review',
     scenario: 'Test original, suggested, selected changes, and applied states.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--toast',
   },
   'approval-checkpoint': {
     eyebrow: 'Approval preview',
@@ -45,7 +41,6 @@ const stageContent: Record<
     body: 'The stage will summarize the proposed action, expose its scope, and separate approve, adjust, and cancel paths.',
     recommended: 'Approve',
     scenario: 'Test ready, adjusting scope, approved, and cancelled states.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--accordion',
   },
   'interrupted-session': {
     eyebrow: 'Resume preview',
@@ -53,7 +48,6 @@ const stageContent: Record<
     body: 'The stage will preserve completed work, call out missing context, and make resume safer than starting over.',
     recommended: 'Recover',
     scenario: 'Test interrupted, context preserved, missing input, and resumed states.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--accordion',
   },
   'error-recovery': {
     eyebrow: 'Recovery preview',
@@ -61,7 +55,6 @@ const stageContent: Record<
     body: 'The stage will explain what failed, preserve progress, and offer recovery actions that are specific enough to choose.',
     recommended: 'Recover',
     scenario: 'Test failed, cause identified, next step selected, and recovered states.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--tabs',
   },
 }
 
@@ -93,7 +86,23 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
               <p className="preview-status">
                 This route is a scaffold. The preview below is illustrative only and will become interactive in a later milestone.
               </p>
-              <div className={stage.frameClassName} aria-hidden="true" />
+              <div className="pattern-preview-card" aria-label={`${section.title} planned states`}>
+                <div className="pattern-preview-card__header">
+                  <span>{section.category}</span>
+                  <strong>{section.states.length} states</strong>
+                </div>
+                <ol className="pattern-state-list">
+                  {section.states.map((state, index) => (
+                    <li
+                      className={index === 0 ? 'pattern-state-list__item pattern-state-list__item--active' : 'pattern-state-list__item'}
+                      key={state}
+                    >
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <strong>{state}</strong>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </div>
           </div>
 
