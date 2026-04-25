@@ -12,37 +12,37 @@ export type MotionSection = {
 
 export const overviewCards = [
   {
-    title: 'Clear motion contracts',
+    title: 'Clear motion targets',
     copy:
-      'Each component is documented with a compact motion spec so humans and AI agents work from the same interaction target.',
+      'Each component route defines the motion target in plain language so the interaction can be tested against something specific.',
   },
   {
-    title: 'Default shadcn baseline',
+    title: 'Familiar component shells',
     copy:
-      'V1 keeps the visual treatment close to shadcn so the repo isolates interaction quality rather than redesigning the whole surface.',
+      'V1 stays close to shadcn so the work focuses on choreography, timing, and behavior instead of redesigning every primitive.',
   },
   {
-    title: 'Reduced motion included',
+    title: 'Reduced motion stays in scope',
     copy:
-      'Every section ships with a reduced-motion fallback so reliability includes accessibility, not just visual polish.',
+      'Every study includes a simpler fallback so accessibility is part of the motion decision, not a follow-up task.',
   },
 ]
 
 export const workflowSteps = [
   {
-    title: 'Explore in Figma',
+    title: 'Define the interaction target',
     copy:
-      'Use rough motion boards and MCP-assisted experiments to find a plausible interaction shape before implementation.',
+      'Start with the trigger, the visible change, and the pacing goal before touching implementation details.',
   },
   {
-    title: 'Lock the repo spec',
+    title: 'Keep the shell familiar',
     copy:
-      'Treat the repo as the canonical source for motion intent, prompt templates, code, and lightweight reliability checks.',
+      'Use the default component structure so motion decisions can be judged without a full visual redesign getting in the way.',
   },
   {
-    title: 'Refine through implementation',
+    title: 'Verify in code',
     copy:
-      'Start with CSS and native browser transitions, then reach for a motion library only when orchestration meaningfully improves the result.',
+      'Compare variants, repeat the interaction quickly, and check reduced-motion behavior before calling the study done.',
   },
 ]
 

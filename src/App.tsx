@@ -27,12 +27,12 @@ function App() {
       </a>
       <aside className="sidebar">
         <div className="sidebar__masthead">
-          <p className="eyebrow">Reusable starter</p>
+          <p className="eyebrow">Component motion</p>
           <NavLink className="brand" to="/">
             shadcn Motion Lab
           </NavLink>
           <p className="sidebar__copy">
-            A clearer component gallery for testing whether motion specs are obvious to humans and reliable for AI implementation.
+            A live gallery for studying how common shadcn components enter, exit, reveal, and respond.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ function App() {
         </nav>
 
         <div className="sidebar__footer">
-          <p>Preview-first docs. Controls stay visible. Motion notes stay readable.</p>
+          <p>Live previews first. Specs stay compact. Reduced motion stays in scope.</p>
         </div>
       </aside>
 
