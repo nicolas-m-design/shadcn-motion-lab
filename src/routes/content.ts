@@ -1,167 +1,162 @@
-export type PatternSection = {
+export type MotionSection = {
   slug: string
   title: string
   category: string
-  purpose: string
-  scenario: string
-  behavior: string
+  goal: string
+  intent: string
   implementation: string
-  states: string[]
+  figma: string
+  variants: string[]
   checks: string[]
 }
 
 export const overviewCards = [
   {
-    title: 'Live interaction states',
+    title: 'Clear motion contracts',
     copy:
-      'Each pattern is framed around a concrete AI-interface state, then shown as a running route instead of a static mockup.',
+      'Each component is documented with a compact motion spec so humans and AI agents work from the same interaction target.',
   },
   {
-    title: 'Built from familiar primitives',
+    title: 'Default shadcn baseline',
     copy:
-      'shadcn/ui provides the base controls so the lab can focus on behavior, sequence, and motion rather than rebuilding primitives.',
+      'V1 keeps the visual treatment close to shadcn so the repo isolates interaction quality rather than redesigning the whole surface.',
   },
   {
-    title: 'Motion with a job',
+    title: 'Reduced motion included',
     copy:
-      'Transitions are used when they clarify progress, review, approval, or recovery states, with reduced-motion paths planned for meaningful movement.',
+      'Every section ships with a reduced-motion fallback so reliability includes accessibility, not just visual polish.',
   },
 ]
 
-export const categoryGroups = [
+export const workflowSteps = [
   {
-    title: 'Observe',
+    title: 'Explore in Figma',
     copy:
-      'Patterns that make agent activity, sources, and progress visible while work is unfolding.',
+      'Use rough motion boards and MCP-assisted experiments to find a plausible interaction shape before implementation.',
   },
   {
-    title: 'Review',
+    title: 'Lock the repo spec',
     copy:
-      'Patterns for comparing, inspecting, and deciding whether generated output is ready to use.',
+      'Treat the repo as the canonical source for motion intent, prompt templates, code, and lightweight reliability checks.',
   },
   {
-    title: 'Approve',
+    title: 'Refine through implementation',
     copy:
-      'Patterns for scoped consent, confirmation, and partial application before an AI action changes something.',
-  },
-  {
-    title: 'Recover',
-    copy:
-      'Patterns that help users resume interrupted work, repair missing context, or choose a next step after failure.',
+      'Start with CSS and native browser transitions, then reach for a motion library only when orchestration meaningfully improves the result.',
   },
 ]
 
-export const patternSections: PatternSection[] = [
+export const motionSections: MotionSection[] = [
   {
-    slug: 'tool-call-timeline',
-    title: 'Tool-call timeline',
-    category: 'Observe',
-    purpose: 'Expose what the assistant is doing without turning progress into noise.',
-    scenario:
-      'An assistant is gathering context, checking files, and preparing a recommendation while the user waits.',
-    behavior:
-      'Show ordered steps with current, completed, and pending states. Motion should help new events land without pulling attention away from the active result.',
+    slug: 'dialog',
+    title: 'Dialog',
+    category: 'Overlay',
+    goal: 'Clear layer entry with simultaneous backdrop and surface motion.',
+    intent:
+      'Use translate plus opacity to make layer changes readable without adding drag to a frequent interaction.',
     implementation:
-      'Use a compact vertical timeline with live status, progressive disclosure, and a reduced-motion path for inserted steps.',
-    states: ['Queued', 'Running', 'Completed', 'Needs attention'],
+      'CSS first. Backdrop and surface start together. Exit should be faster than entry. No scale in v1.',
+    figma:
+      'Use rough frames to check entry and exit pacing before encoding the canonical timings in code.',
+    variants: ['Standard', 'Snappy', 'Expressive', 'Reduced motion'],
     checks: [
-      'Current step is obvious at a glance',
-      'Completed steps remain scannable',
-      'New steps do not create layout jumps',
+      'Focus trap remains correct',
+      'Rapid reopen does not glitch',
+      'Escape and outside click behavior stay intact',
     ],
   },
   {
-    slug: 'streaming-citations',
-    title: 'Streaming response with sources',
-    category: 'Observe',
-    purpose: 'Pair generated text with source context before trust becomes an afterthought.',
-    scenario:
-      'A response is arriving incrementally and the interface needs to reveal supporting references without interrupting reading.',
-    behavior:
-      'Stream the answer in chunks, then attach source markers and a compact source panel as evidence becomes available.',
+    slug: 'drawer',
+    title: 'Drawer',
+    category: 'Overlay',
+    goal: 'Communicate edge origin with a tiny backdrop lead and restrained slide.',
+    intent:
+      'Preserve perceived responsiveness while keeping the panel direction obvious on desktop and mobile.',
     implementation:
-      'Use staged text reveal, inline source chips, and a persistent source summary that can update without moving the main answer.',
-    states: ['Generating', 'Source found', 'Source reviewed', 'Complete'],
+      'CSS first. Backdrop may lead slightly. Keep travel short and avoid heavy-feeling motion.',
+    figma:
+      'Use edge-origin references in rough boards to test whether the panel feels directional without feeling slow.',
+    variants: ['Standard', 'Snappy', 'Expressive', 'Reduced motion'],
     checks: [
-      'Streaming remains readable',
-      'Sources are connected to specific claims',
-      'Confidence or uncertainty is visible without dominating the answer',
+      'Open and close remain responsive',
+      'Content stays readable during motion',
+      'Reduced-motion path is clearly simpler',
     ],
   },
   {
-    slug: 'compare-apply-review',
-    title: 'Compare and apply review',
-    category: 'Review',
-    purpose: 'Let users inspect generated changes before committing them.',
-    scenario:
-      'An assistant proposes changes and the user needs to compare the current and suggested versions before applying anything.',
-    behavior:
-      'Show before and after states, highlight changed regions, and make the apply action feel deliberate rather than automatic.',
+    slug: 'dropdown-menu',
+    title: 'Dropdown Menu',
+    category: 'Overlay',
+    goal: 'Improve orientation without slowing a high-frequency interaction.',
+    intent:
+      'Keep the movement brief and close to native expectations, with only a very subtle expressive stagger.',
     implementation:
-      'Use a split review surface with change markers, an apply bar, and clear partial-apply affordances for scoped changes.',
-    states: ['Original', 'Suggested', 'Selected changes', 'Applied'],
+      'CSS first. Use minimal travel. Expressive mode may stagger only two or three items perceptibly.',
+    figma:
+      'Test whether item staggering helps orientation or simply adds delay before making it canonical.',
+    variants: ['Standard', 'Snappy', 'Expressive', 'Reduced motion'],
     checks: [
-      'Changed areas are easy to locate',
-      'Apply action scope is unambiguous',
-      'Rejected changes do not look applied',
+      'Keyboard navigation is unaffected',
+      'Rapid open and close remains crisp',
+      'Expressive mode stays subtle',
     ],
   },
   {
-    slug: 'approval-checkpoint',
-    title: 'Approval checkpoint',
-    category: 'Approve',
-    purpose: 'Create a clear pause before an AI action crosses a boundary.',
-    scenario:
-      'An assistant is ready to perform a scoped action and needs explicit approval before continuing.',
-    behavior:
-      'Summarize what will happen, show the permission scope, and separate approve, adjust, and cancel paths.',
+    slug: 'toast',
+    title: 'Toast',
+    category: 'Feedback',
+    goal: 'Make transient feedback visible without becoming noisy.',
+    intent:
+      'Use brief, edge-aware entry so the toast is noticeable but does not dominate the page.',
     implementation:
-      'Use a focused checkpoint panel with scope chips, risk level, action preview, and a confirmation transition into progress.',
-    states: ['Ready for approval', 'Adjusting scope', 'Approved', 'Cancelled'],
+      'CSS first. Keep entry short, exit faster, and avoid bounce in v1.',
+    figma:
+      'Rough stacking studies should answer whether multiple toasts still feel orderly with the chosen timings.',
+    variants: ['Standard', 'Snappy', 'Expressive', 'Reduced motion'],
     checks: [
-      'The action boundary is explicit',
-      'Primary and escape paths are both clear',
-      'Approval does not feel like a generic modal',
+      'Stacked toasts remain legible',
+      'Dismiss remains crisp',
+      'Reduced-motion mode preserves clarity',
     ],
   },
   {
-    slug: 'interrupted-session',
-    title: 'Interrupted and resumed task',
-    category: 'Recover',
-    purpose: 'Help users understand what stopped and where they can safely continue.',
-    scenario:
-      'A long-running assistant task was interrupted by a refresh, timeout, or missing permission.',
-    behavior:
-      'Show the last known step, what was preserved, what needs attention, and a safe resume action.',
+    slug: 'accordion',
+    title: 'Accordion',
+    category: 'Micro-interaction',
+    goal: 'Clarify reveal and collapse without slowing scanning.',
+    intent:
+      'Use restrained content reveal with chevron and content moving together, while the chevron remains quieter.',
     implementation:
-      'Use a resumable task card with preserved context, missing requirement callout, and a visible resume checkpoint.',
-    states: ['Interrupted', 'Context preserved', 'Missing input', 'Resumed'],
+      'CSS first. Keep the interaction light, avoid rubbery feel, and do not overplay the icon.',
+    figma:
+      'Use rough motion boards to tune how much content fade helps before it starts to feel delayed.',
+    variants: ['Standard', 'Snappy', 'Expressive', 'Reduced motion'],
     checks: [
-      'The interruption cause is understandable',
-      'Preserved work is separated from missing work',
-      'Resume action is safer than restart',
+      'Variable heights behave cleanly',
+      'Repeated toggles do not jitter',
+      'Chevron motion stays secondary to content',
     ],
   },
   {
-    slug: 'error-recovery',
-    title: 'Error with next-step recovery',
-    category: 'Recover',
-    purpose: 'Turn an AI failure into a usable next step instead of a dead end.',
-    scenario:
-      'An assistant cannot complete a request because context is missing, a tool failed, or the requested action is unsafe.',
-    behavior:
-      'Explain the failure in plain language, preserve progress, and offer specific recovery actions.',
+    slug: 'tabs',
+    title: 'Tabs',
+    category: 'Micro-interaction',
+    goal: 'Preserve orientation through indicator motion rather than heavy panel transitions.',
+    intent:
+      'Make switching feel connected while keeping the active state understandable even with very little motion.',
     implementation:
-      'Use an error panel with status history, likely cause, recommended action, and an alternate path.',
-    states: ['Failed', 'Cause identified', 'Next step selected', 'Recovered'],
+      'Indicator animation first. Keep panel transitions light and avoid large slides in v1.',
+    figma:
+      'Use rough boards to compare indicator-led continuity against panel-led continuity before implementing.',
+    variants: ['Standard', 'Snappy', 'Expressive', 'Reduced motion'],
     checks: [
-      'The message avoids blame and vagueness',
-      'The next action is concrete',
-      'Previous progress remains visible',
+      'Rapid tab switching stays stable',
+      'Keyboard behavior remains correct',
+      'Indicator motion does most of the work',
     ],
   },
 ]
 
 export function getSectionBySlug(slug: string) {
-  return patternSections.find(section => section.slug === slug)
+  return motionSections.find(section => section.slug === slug)
 }

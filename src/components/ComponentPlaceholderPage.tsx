@@ -1,7 +1,7 @@
-import type { PatternSection } from '../routes/content'
+import type { MotionSection } from '../routes/content'
 
 type ComponentPlaceholderPageProps = {
-  section: PatternSection
+  section: MotionSection
 }
 
 const stageContent: Record<
@@ -12,49 +12,48 @@ const stageContent: Record<
     body: string
     recommended: string
     scenario: string
+    frameClassName: string
   }
 > = {
-  'tool-call-timeline': {
-    eyebrow: 'Activity preview',
-    title: 'Make agent work visible without making it loud.',
-    body: 'The stage will show ordered tool steps, current activity, and completed context checks while keeping the main result area calm.',
-    recommended: 'Observe',
-    scenario: 'Test queued, running, completed, and attention states.',
+  drawer: {
+    eyebrow: 'Edge-origin preview',
+    title: 'Drawer should read as directional, not heavy.',
+    body: 'The stage will compare a short-travel drawer against a slightly more expressive panel while keeping the page content legible behind it.',
+    recommended: 'Standard',
+    scenario: 'Test open, close, rapid reopen, and mobile-width behavior.',
+    frameClassName: 'preview-stage__mock preview-stage__mock--drawer',
   },
-  'streaming-citations': {
-    eyebrow: 'Source preview',
-    title: 'Let evidence arrive with the answer.',
-    body: 'The stage will pair incremental text reveal with source markers and a compact evidence panel that updates without disrupting reading.',
-    recommended: 'Observe',
-    scenario: 'Test generating, source found, source reviewed, and complete states.',
+  'dropdown-menu': {
+    eyebrow: 'High-frequency preview',
+    title: 'Menu motion should orient without slowing selection.',
+    body: 'This stage will keep the button and menu visible together so subtle stagger choices can be judged in context instead of in isolation.',
+    recommended: 'Snappy',
+    scenario: 'Test repeated open-close and keyboard navigation rhythm.',
+    frameClassName: 'preview-stage__mock preview-stage__mock--menu',
   },
-  'compare-apply-review': {
-    eyebrow: 'Review preview',
-    title: 'Keep generated changes inspectable before they land.',
-    body: 'The stage will compare current and suggested states, highlight changes, and make partial apply paths visible.',
-    recommended: 'Review',
-    scenario: 'Test original, suggested, selected changes, and applied states.',
+  toast: {
+    eyebrow: 'Feedback preview',
+    title: 'Toast should be noticeable without hijacking the screen.',
+    body: 'The stage will show stacked notifications so timing and overlap can be judged under a realistic burst, not just a single toast.',
+    recommended: 'Standard',
+    scenario: 'Test stack behavior, dismiss speed, and reduced-motion fallback.',
+    frameClassName: 'preview-stage__mock preview-stage__mock--toast',
   },
-  'approval-checkpoint': {
-    eyebrow: 'Approval preview',
-    title: 'Pause before an AI action crosses a boundary.',
-    body: 'The stage will summarize the proposed action, expose its scope, and separate approve, adjust, and cancel paths.',
-    recommended: 'Approve',
-    scenario: 'Test ready, adjusting scope, approved, and cancelled states.',
+  accordion: {
+    eyebrow: 'Reveal preview',
+    title: 'Accordion should clarify expansion without slowing scanning.',
+    body: 'The stage will compare content reveal weight, chevron behavior, and repeated toggles across variable-height sections.',
+    recommended: 'Standard',
+    scenario: 'Test repeat toggles, tall content, and keyboard navigation.',
+    frameClassName: 'preview-stage__mock preview-stage__mock--accordion',
   },
-  'interrupted-session': {
-    eyebrow: 'Resume preview',
-    title: 'Show what stopped and what can continue.',
-    body: 'The stage will preserve completed work, call out missing context, and make resume safer than starting over.',
-    recommended: 'Recover',
-    scenario: 'Test interrupted, context preserved, missing input, and resumed states.',
-  },
-  'error-recovery': {
-    eyebrow: 'Recovery preview',
-    title: 'Turn failure into a concrete next step.',
-    body: 'The stage will explain what failed, preserve progress, and offer recovery actions that are specific enough to choose.',
-    recommended: 'Recover',
-    scenario: 'Test failed, cause identified, next step selected, and recovered states.',
+  tabs: {
+    eyebrow: 'Navigation preview',
+    title: 'Tabs should orient through indicator motion, not big panel slides.',
+    body: 'The stage will focus on continuity between tab states and whether the indicator does enough work on its own.',
+    recommended: 'Snappy',
+    scenario: 'Test rapid switching and active-state clarity without motion.',
+    frameClassName: 'preview-stage__mock preview-stage__mock--tabs',
   },
 }
 
@@ -67,11 +66,11 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
         <div className="component-hero__copy">
           <p className="eyebrow">{section.category}</p>
           <h1>{section.title}</h1>
-          <p className="page-lede">{section.purpose}</p>
+          <p className="page-lede">{section.goal}</p>
           <div className="meta-row">
-            <span className="meta-chip">{section.category}</span>
-            <span className="meta-chip">{section.states.length} key states</span>
-            <span className="meta-chip meta-chip--warning">Route scaffold</span>
+            <span className="meta-chip">4 variants planned</span>
+            <span className="meta-chip">Reduced motion included</span>
+            <span className="meta-chip meta-chip--warning">Preview mock only</span>
           </div>
         </div>
       </header>
@@ -84,46 +83,30 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
               <h2>{stage.title}</h2>
               <p>{stage.body}</p>
               <p className="preview-status">
-                This route is a scaffold. The preview below is illustrative only and will become interactive in a later milestone.
+                This page is a route-level scaffold. The stage below is illustrative only and is not interactive yet.
               </p>
-              <div className="pattern-preview-card" aria-label={`${section.title} planned states`}>
-                <div className="pattern-preview-card__header">
-                  <span>{section.category}</span>
-                  <strong>{section.states.length} states</strong>
-                </div>
-                <ol className="pattern-state-list">
-                  {section.states.map((state, index) => (
-                    <li
-                      className={index === 0 ? 'pattern-state-list__item pattern-state-list__item--active' : 'pattern-state-list__item'}
-                      key={state}
-                    >
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <strong>{state}</strong>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+              <div className={stage.frameClassName} aria-hidden="true" />
             </div>
           </div>
 
           <aside className="control-panel">
             <div className="control-panel__block">
-              <p className="control-panel__label">Key states</p>
+              <p className="control-panel__label">Variants</p>
               <div className="variant-grid">
-                {section.states.map(state => (
-                  <span className="variant-chip" key={state}>
-                    {state}
+                {section.variants.map(variant => (
+                  <span className="variant-chip" key={variant}>
+                    {variant}
                   </span>
                 ))}
               </div>
               <p className="control-panel__hint">
-                These are planned states, not working controls yet.
+                These are planned variants, not working controls yet.
               </p>
             </div>
             <div className="control-panel__block spec-card">
-              <p className="control-panel__label">Pattern category</p>
+              <p className="control-panel__label">Selected spec</p>
               <h2>{stage.recommended}</h2>
-              <p>{section.behavior}</p>
+              <p>{section.intent}</p>
               <p className="spec-card__status">{stage.scenario}</p>
             </div>
           </aside>
@@ -132,12 +115,12 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
 
       <section className="content-section" id="spec">
         <div className="doc-block">
-          <h2>Pattern anatomy</h2>
-          <p>{section.scenario}</p>
+          <h2>Motion spec</h2>
+          <p>{section.goal}</p>
           <ul>
-            <li>Category: {section.category}.</li>
+            <li>Planned variants: {section.variants.join(', ')}.</li>
             <li>Primary scenario: {stage.scenario}</li>
-            <li>Motion should clarify state changes without becoming the pattern itself.</li>
+            <li>Reduced-motion path is part of v1, not a follow-up task.</li>
           </ul>
         </div>
       </section>
@@ -147,16 +130,16 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
           <h2>Implementation notes</h2>
           <p>{section.implementation}</p>
           <p className="doc-status">
-            Implementation for this route has not started yet. The current page establishes the pattern structure and state expectations only.
+            Implementation for this route has not started yet. The current page establishes content structure and testing expectations only.
           </p>
         </div>
       </section>
 
       <section className="content-section" id="prompt">
         <div className="doc-block">
-          <h2>Starter prompt</h2>
+          <h2>Prompt template</h2>
           <pre className="code-block">
-            <code>{`Implement the ${section.title} pattern.\n\nPurpose:\n${section.purpose}\n\nScenario:\n${section.scenario}\n\nConstraints:\n- Use shadcn/ui primitives where they help.\n- Keep the demo product-neutral and inspectable.\n- Make state transitions clear.\n- Add reduced-motion handling if motion carries meaning.\n- Keep the implementation small and readable.`}</code>
+            <code>{`Implement the ${section.title} motion spec.\n\nConstraints:\n- Keep the default shadcn visual style.\n- Preserve accessibility and keyboard behavior.\n- Add reduced-motion handling.\n- Keep the implementation small and readable.`}</code>
           </pre>
         </div>
       </section>
@@ -169,6 +152,13 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
               <li key={check}>{check}</li>
             ))}
           </ul>
+        </div>
+      </section>
+
+      <section className="content-section">
+        <div className="doc-block">
+          <h2>Figma exploration note</h2>
+          <p>{section.figma}</p>
         </div>
       </section>
     </div>

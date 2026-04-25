@@ -29,6 +29,29 @@ Use this file to track time for the eventual article. Keep entries factual and l
 - Open questions:
   - Whether the category colors should remain visible or become more neutral after the first live demo lands.
 
+## 2026-04-25
+
+### Session 4
+
+- Start: 12:05 CEST
+- End: 12:08 CEST
+- Duration: 0h 3m
+- Milestone: IA correction
+- Work completed:
+  - Restored the routed app from AI workflow patterns back to component-level motion studies.
+  - Re-exposed the live dialog demo on the public route.
+  - Reverted overview, route content, placeholder pages, and app styling to the motion-first structure.
+  - Verified the production build after the correction.
+- AI helped with:
+  - Comparing the drifted app files against the last motion-first revision.
+  - Reverting only the routed UI files while preserving `DESIGN.md` and `notes/`.
+- Manual decisions:
+  - Keep article and workflow notes private in the repo.
+  - Restore the site immediately to the original motion/component thesis before making any new forward changes.
+- Open questions:
+  - Which component should be the second live motion demo after dialog.
+  - Whether the overview copy should stay exactly as restored or be rewritten with the same motion-first thesis but sharper language.
+
 ### Session 2
 
 - Start: 11:01 CEST
