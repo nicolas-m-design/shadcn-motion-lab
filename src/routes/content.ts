@@ -10,42 +10,6 @@ export type MotionSection = {
   checks: string[]
 }
 
-export const overviewCards = [
-  {
-    title: 'Clear motion targets',
-    copy:
-      'Each component route defines the motion target in plain language so the interaction can be tested against something specific.',
-  },
-  {
-    title: 'Familiar component shells',
-    copy:
-      'V1 stays close to shadcn so the work focuses on choreography, timing, and behavior instead of redesigning every primitive.',
-  },
-  {
-    title: 'Reduced motion stays in scope',
-    copy:
-      'Every study includes a simpler fallback so accessibility is part of the motion decision, not a follow-up task.',
-  },
-]
-
-export const workflowSteps = [
-  {
-    title: 'Define the interaction target',
-    copy:
-      'Start with the trigger, the visible change, and the pacing goal before touching implementation details.',
-  },
-  {
-    title: 'Keep the shell familiar',
-    copy:
-      'Use the default component structure so motion decisions can be judged without a full visual redesign getting in the way.',
-  },
-  {
-    title: 'Verify in code',
-    copy:
-      'Compare variants, repeat the interaction quickly, and check reduced-motion behavior before calling the study done.',
-  },
-]
-
 export const motionSections: MotionSection[] = [
   {
     slug: 'dialog',

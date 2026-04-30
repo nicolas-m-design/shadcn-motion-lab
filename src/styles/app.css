@@ -241,6 +241,10 @@ small {
   grid-template-columns: minmax(0, 1.3fr) minmax(250px, 0.75fr);
 }
 
+.page-hero--simple {
+  grid-template-columns: 1fr;
+}
+
 .component-hero--with-aside {
   grid-template-columns: minmax(0, 1fr) 320px;
   align-items: start;

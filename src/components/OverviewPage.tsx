@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { motionSections, overviewCards, workflowSteps } from '../routes/content'
+import { motionSections } from '../routes/content'
 
 export function OverviewPage() {
   const liveCount = motionSections.filter(section => section.slug === 'dialog').length
@@ -7,7 +7,7 @@ export function OverviewPage() {
 
   return (
     <div className="page page--overview">
-      <header className="page-hero">
+      <header className="page-hero page-hero--simple">
         <div className="page-hero__content">
           <p className="eyebrow">Overview</p>
           <h1>Component motion, tested in live UI.</h1>
@@ -18,8 +18,8 @@ export function OverviewPage() {
             <Link className="button button--primary" to="/components/dialog">
               Open live dialog page
             </Link>
-            <a className="button button--secondary" href="#approach">
-              See the gallery approach
+            <a className="button button--secondary" href="#components">
+              Browse components
             </a>
           </div>
           <div className="hero-stat-row">
@@ -28,47 +28,9 @@ export function OverviewPage() {
             <span className="hero-stat">Reduced motion planned</span>
           </div>
         </div>
-        <div className="poster-panel">
-          <p className="poster-panel__eyebrow">Build queue</p>
-          <p className="poster-panel__line">Dialog is live.</p>
-          <p className="poster-panel__line">Drawer studies edge motion next.</p>
-          <p className="poster-panel__line">Dropdown, toast, accordion, and tabs follow.</p>
-        </div>
       </header>
 
-      <section className="content-section content-section--overview-grid" id="approach">
-        <div className="doc-block doc-block--plain">
-          <div className="section-heading">
-            <p className="eyebrow">Focus</p>
-            <h2>What this gallery optimizes for</h2>
-          </div>
-          <div className="compact-list">
-            {overviewCards.map(card => (
-              <article className="compact-list__item" key={card.title}>
-                <strong>{card.title}</strong>
-                <p>{card.copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <div className="doc-block doc-block--plain">
-          <div className="section-heading">
-            <p className="eyebrow">Approach</p>
-            <h2>How each motion study is built</h2>
-          </div>
-          <ol className="workflow-list workflow-list--compact">
-            {workflowSteps.map(step => (
-              <li key={step.title}>
-                <strong>{step.title}</strong>
-                <p>{step.copy}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <section className="content-section">
+      <section className="content-section" id="components">
         <div className="section-heading">
           <p className="eyebrow">Components</p>
           <h2>Current studies</h2>
