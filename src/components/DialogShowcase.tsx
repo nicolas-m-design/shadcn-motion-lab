@@ -51,38 +51,6 @@ const dialogVariantMeta: Record<DialogVariant, DialogVariantMeta> = {
   },
 }
 
-const dialogCodeSnippet = `const effectiveVariant = prefersReducedMotion ? 'reduced' : selectedVariant
-
-<Dialog.Root open={open} onOpenChange={setOpen}>
-  <Dialog.Trigger asChild>
-    <button className="button button--primary">Open dialog</button>
-  </Dialog.Trigger>
-  <Dialog.Portal>
-    <Dialog.Overlay forceMount className="dialog-overlay" data-motion-profile={effectiveVariant} />
-    <Dialog.Content forceMount className="dialog-content" data-motion-profile={effectiveVariant}>
-      ...
-    </Dialog.Content>
-  </Dialog.Portal>
-</Dialog.Root>`
-
-const dialogPrompt = `Implement the Dialog motion spec.
-
-Use the shared defaults in src/content/rules/motion-rules.md unless this spec overrides them.
-
-Constraints:
-- Keep the default shadcn visual tone.
-- Use translate plus opacity first.
-- Start backdrop and surface simultaneously.
-- Exit should feel faster than entry.
-- Preserve focus handling and keyboard dismissal.
-- Respect prefers-reduced-motion with an opacity-only path.
-- Keep the code small and CSS-first.
-
-Deliver:
-- working interaction
-- concise implementation notes
-- brief rule audit listing which shared rules were applied or intentionally overridden.`
-
 type DialogShowcaseProps = {
   section: MotionSection
 }
@@ -98,26 +66,11 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
 
   return (
     <div className="page">
-      <header className="component-hero component-hero--with-aside">
+      <header className="component-hero">
         <div className="component-hero__copy">
-          <p className="eyebrow">{section.category}</p>
           <h1>{section.title}</h1>
           <p className="page-lede">{section.goal}</p>
-          <div className="meta-row">
-            <span className="meta-chip">4 variants</span>
-            <span className="meta-chip">Reduced motion aware</span>
-          </div>
         </div>
-
-        <aside className="hero-start-card">
-          <p className="control-panel__label">Start here</p>
-          <h2>Test the live dialog first.</h2>
-          <ol>
-            <li>Open the dialog from the preview stage.</li>
-            <li>Close it with the backdrop, close button, or Escape.</li>
-            <li>Reopen quickly, then compare against Snappy.</li>
-          </ol>
-        </aside>
       </header>
 
       <section className="content-section content-section--tight" id="preview">
@@ -131,9 +84,7 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
                   <span />
                 </div>
                 <div className="preview-stage__body">
-                  <p className="eyebrow">Live preview</p>
-                  <h2>Open the dialog from inside the stage.</h2>
-                  <p>Everything needed to test the interaction is visible without switching tabs or scanning the page first.</p>
+                  <h2>Open dialog.</h2>
                   <Dialog.Root onOpenChange={setOpen} open={open}>
                     <Dialog.Trigger asChild>
                       <button className="button button--primary" type="button">
@@ -156,7 +107,7 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
                           <div>
                             <Dialog.Title className="dialog-title">Review motion intent</Dialog.Title>
                             <Dialog.Description className="dialog-description" id={descriptionId}>
-                              This preview keeps the visual shell plain so the choreography is the main thing under review.
+                              Plain shell. Visible choreography.
                             </Dialog.Description>
                           </div>
                           <Dialog.Close asChild>
@@ -181,7 +132,7 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
                           </div>
                           <div className="dialog-detail">
                             <span>Accessibility</span>
-                            <strong>Focus trap, escape, and close button preserved</strong>
+                            <strong>Focus trap, escape, close preserved</strong>
                           </div>
                         </div>
 
@@ -191,9 +142,6 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
                               Close
                             </button>
                           </Dialog.Close>
-                          <button className="button button--ghost" type="button">
-                            Keep iterating
-                          </button>
                         </div>
                       </Dialog.Content>
                     </Dialog.Portal>
@@ -206,11 +154,7 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
           <aside className="control-panel">
             <div className="control-panel__block">
               <p className="control-panel__label">Variants</p>
-              <div
-                aria-label="Dialog motion variants"
-                className="variant-grid"
-                role="group"
-              >
+              <div aria-label="Dialog motion variants" className="variant-grid" role="group">
                 {dialogVariants.map(variant => (
                   <button
                     aria-pressed={selectedVariant === variant.id}
@@ -226,77 +170,18 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
             </div>
 
             <div className="control-panel__block spec-card">
-              <p className="control-panel__label">Selected spec</p>
+              <p className="control-panel__label">Motion target</p>
               <h2>{activeVariantMeta.label}</h2>
               <div className="metric-row" aria-label={`Selected timing: ${activeVariantMeta.summary}`}>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[0]}</span>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[1]}</span>
               </div>
-              <p>{activeVariantMeta.movement}</p>
               <p>{activeVariantMeta.staging}</p>
               <p className="spec-card__status">
-                {prefersReducedMotion
-                  ? 'System reduced motion is active, so the preview is currently showing the reduced profile.'
-                  : activeVariantMeta.rationale}
+                {prefersReducedMotion ? 'Reduced profile active.' : activeVariantMeta.rationale}
               </p>
             </div>
-
           </aside>
-        </div>
-      </section>
-
-      <section className="content-section" id="spec">
-        <div className="doc-block">
-          <h2>Motion spec</h2>
-          <ul>
-            <li>Intent: clear layer entry without slowing repeated use.</li>
-            <li>Trigger: open or close the dialog from the preview stage.</li>
-            <li>Behavior: opacity plus upward settle, with faster exit than entry.</li>
-            <li>Staging: backdrop and surface start simultaneously.</li>
-            <li>Reduced motion: opacity-only state change.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="content-section" id="implementation">
-        <div className="doc-block">
-          <h2>Implementation notes</h2>
-          <p>{section.implementation}</p>
-          <p>
-            The demo uses Radix Dialog for semantics and focus management, while motion stays CSS-first through
-            `data-state` and `data-motion-profile`.
-          </p>
-          <pre className="code-block">
-            <code>{dialogCodeSnippet}</code>
-          </pre>
-        </div>
-      </section>
-
-      <section className="content-section" id="prompt">
-        <div className="doc-block">
-          <h2>Prompt template</h2>
-          <pre className="code-block">
-            <code>{dialogPrompt}</code>
-          </pre>
-        </div>
-      </section>
-
-      <section className="content-section" id="checks">
-        <div className="doc-block">
-          <h2>Reliability checks</h2>
-          <ul>
-            {section.checks.map(check => (
-              <li key={check}>{check}</li>
-            ))}
-            <li>Backdrop and surface still feel simultaneous after visual polish changes.</li>
-          </ul>
-        </div>
-      </section>
-
-      <section className="content-section">
-        <div className="doc-block">
-          <h2>Figma exploration note</h2>
-          <p>{section.figma}</p>
         </div>
       </section>
     </div>
