@@ -7,39 +7,28 @@ type ComponentPlaceholderPageProps = {
 const stageContent: Record<
   string,
   {
-    title: string
-    recommended: string
+    profile: string
     scenario: string
     frameClassName: string
   }
 > = {
-  drawer: {
-    title: 'Edge-origin panel reveal.',
-    recommended: 'Standard',
-    scenario: 'Open, close, rapid reopen, mobile width.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--drawer',
-  },
   'dropdown-menu': {
-    title: 'Trigger-attached menu motion.',
-    recommended: 'Snappy',
+    profile: 'Snappy',
     scenario: 'Open, close, repeated trigger, keyboard use.',
     frameClassName: 'preview-stage__mock preview-stage__mock--menu',
   },
   toast: {
-    title: 'Transient stack entry and exit.',
-    recommended: 'Standard',
+    profile: 'Standard',
     scenario: 'Burst, dismiss, overlap, reduced motion.',
     frameClassName: 'preview-stage__mock preview-stage__mock--toast',
   },
   accordion: {
-    title: 'Content reveal without drag.',
-    recommended: 'Standard',
+    profile: 'Standard',
     scenario: 'Repeated toggles, tall content, keyboard use.',
     frameClassName: 'preview-stage__mock preview-stage__mock--accordion',
   },
   tabs: {
-    title: 'Indicator-led continuity.',
-    recommended: 'Snappy',
+    profile: 'Snappy',
     scenario: 'Rapid switching, active-state clarity.',
     frameClassName: 'preview-stage__mock preview-stage__mock--tabs',
   },
@@ -61,7 +50,6 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
         <div className="preview-grid">
           <div className="preview-stage">
             <div className="preview-stage__canvas preview-stage__canvas--placeholder">
-              <h2>{stage.title}</h2>
               <div className={stage.frameClassName} aria-hidden="true" />
             </div>
           </div>
@@ -78,8 +66,8 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
               </div>
             </div>
             <div className="control-panel__block spec-card">
-              <p className="control-panel__label">Motion target</p>
-              <h2>{stage.recommended}</h2>
+              <p className="control-panel__label">Preview</p>
+              <h2>{stage.profile}</h2>
               <p className="spec-card__status">{stage.scenario}</p>
             </div>
           </aside>

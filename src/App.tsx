@@ -1,6 +1,7 @@
 import { NavLink, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import { ComponentPlaceholderPage } from './components/ComponentPlaceholderPage'
 import { DialogShowcase } from './components/DialogShowcase'
+import { DrawerShowcase } from './components/DrawerShowcase'
 import { OverviewPage } from './components/OverviewPage'
 import { getSectionBySlug, motionSections } from './routes/content'
 
@@ -14,6 +15,10 @@ function ComponentRoute() {
 
   if (section.slug === 'dialog') {
     return <DialogShowcase section={section} />
+  }
+
+  if (section.slug === 'drawer') {
+    return <DrawerShowcase section={section} />
   }
 
   return <ComponentPlaceholderPage section={section} />
