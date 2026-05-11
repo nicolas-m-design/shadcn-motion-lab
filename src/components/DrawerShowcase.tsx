@@ -1,7 +1,10 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { useId, useRef, useState } from 'react'
 import type { MotionSection } from '../routes/content'
+import { useDocumentTitle } from './useDocumentTitle'
+import { useInertOutside } from './useInertOutside'
 import { useReducedMotionPreference } from './useReducedMotionPreference'
+import { VariantRadioGroup } from './VariantRadioGroup'
 
 type DrawerVariant = 'standard' | 'snappy' | 'expressive' | 'reduced'
 
@@ -56,6 +59,7 @@ type DrawerShowcaseProps = {
 }
 
 export function DrawerShowcase({ section }: DrawerShowcaseProps) {
+  useDocumentTitle(section.title)
   const descriptionId = useId()
   const prefersReducedMotion = useReducedMotionPreference()
   const previewRef = useRef<HTMLDivElement | null>(null)
@@ -65,9 +69,17 @@ export function DrawerShowcase({ section }: DrawerShowcaseProps) {
   const effectiveVariant = prefersReducedMotion ? 'reduced' : selectedVariant
   const activeVariantMeta = drawerVariantMeta[effectiveVariant]
 
+  useInertOutside(open, '[data-shell-region="outside"], aside.sidebar')
+
+  const variantOptions = drawerVariants.map(variant => ({
+    id: variant.id,
+    label: variant.label,
+    disabled: prefersReducedMotion && variant.id !== 'reduced',
+  }))
+
   return (
     <div className="page">
-      <header className="component-hero">
+      <header className="component-hero" data-shell-region="outside">
         <div className="component-hero__copy">
           <h1>{section.title}</h1>
           <p className="page-lede">{section.goal}</p>
@@ -79,7 +91,7 @@ export function DrawerShowcase({ section }: DrawerShowcaseProps) {
           <div className="preview-stage">
             <div className="preview-stage__canvas preview-stage__canvas--drawer" ref={previewRef}>
               <Dialog.Root onOpenChange={setOpen} open={open}>
-                <div className="demo-surface demo-surface--drawer">
+                <div className="demo-surface demo-surface--drawer" data-shell-region="outside">
                   <div className="demo-surface__row">
                     <div>
                       <span className="demo-surface__eyebrow">Right drawer</span>
@@ -154,28 +166,26 @@ export function DrawerShowcase({ section }: DrawerShowcaseProps) {
             </div>
           </div>
 
-          <aside className="control-panel">
+          <aside className="control-panel" data-shell-region="outside">
             <div className="control-panel__block">
               <p className="control-panel__label">Variants</p>
-              <div aria-label="Drawer motion variants" className="variant-grid" role="group">
-                {drawerVariants.map(variant => (
-                  <button
-                    aria-pressed={selectedVariant === variant.id}
-                    className={`variant-chip ${selectedVariant === variant.id ? 'variant-chip--active' : ''}`}
-                    key={variant.id}
-                    onClick={() => setSelectedVariant(variant.id)}
-                    type="button"
-                  >
-                    {variant.label}
-                  </button>
-                ))}
-              </div>
+              <VariantRadioGroup
+                ariaLabel="Drawer motion variants"
+                onChange={id => setSelectedVariant(id as DrawerVariant)}
+                options={variantOptions}
+                value={effectiveVariant}
+              />
+              {prefersReducedMotion ? (
+                <p className="control-panel__note">
+                  System reduced motion is on. Variant locked to Reduced.
+                </p>
+              ) : null}
             </div>
 
             <div className="control-panel__block spec-card">
               <p className="control-panel__label">Profile</p>
               <h2>{activeVariantMeta.label}</h2>
-              <div className="metric-row" aria-label={`Selected timing: ${activeVariantMeta.summary}`}>
+              <div className="metric-row">
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[0]}</span>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[1]}</span>
               </div>
