@@ -3,7 +3,7 @@ import { useId, useRef, useState } from 'react'
 import type { MotionSection } from '../routes/content'
 import { useReducedMotionPreference } from './useReducedMotionPreference'
 
-type DrawerVariant = 'standard' | 'snappy' | 'expressive' | 'reduced'
+type DrawerVariant = 'standard' | 'snappy' | 'expressive' | 'slow' | 'reduced'
 
 type DrawerVariantMeta = {
   label: string
@@ -17,6 +17,7 @@ const drawerVariants: { id: DrawerVariant; label: string }[] = [
   { id: 'standard', label: 'Standard' },
   { id: 'snappy', label: 'Snappy' },
   { id: 'expressive', label: 'Expressive' },
+  { id: 'slow', label: 'Slow-mo' },
   { id: 'reduced', label: 'Reduced' },
 ]
 
@@ -41,6 +42,13 @@ const drawerVariantMeta: Record<DrawerVariant, DrawerVariantMeta> = {
     movement: 'Opacity with a 36px edge slide and a longer settle.',
     staging: 'The backdrop softens in first, then the panel lands with more presence.',
     rationale: 'Useful when the drawer is the main transition on the screen.',
+  },
+  slow: {
+    label: 'Slow-mo',
+    summary: '960ms enter, 640ms exit',
+    movement: 'Standard choreography stretched roughly 4× for inspection.',
+    staging: 'Same backdrop lead, exaggerated edge slide.',
+    rationale: 'Inspection variant. Not for production use.',
   },
   reduced: {
     label: 'Reduced motion',
@@ -79,24 +87,11 @@ export function DrawerShowcase({ section }: DrawerShowcaseProps) {
           <div className="preview-stage">
             <div className="preview-stage__canvas preview-stage__canvas--drawer" ref={previewRef}>
               <Dialog.Root onOpenChange={setOpen} open={open}>
-                <div className="demo-surface demo-surface--drawer">
-                  <div className="demo-surface__row">
-                    <div>
-                      <span className="demo-surface__eyebrow">Right drawer</span>
-                      <h2 className="demo-surface__title">Open drawer.</h2>
-                    </div>
-                    <Dialog.Trigger asChild>
-                      <button className="button button--primary" type="button">
-                        Filters
-                      </button>
-                    </Dialog.Trigger>
-                  </div>
-                  <div className="demo-list" aria-hidden="true">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                </div>
+                <Dialog.Trigger asChild>
+                  <button className="button button--primary" type="button">
+                    Open drawer
+                  </button>
+                </Dialog.Trigger>
                 <Dialog.Portal container={previewRef.current ?? undefined}>
                   <Dialog.Overlay
                     forceMount
@@ -110,44 +105,16 @@ export function DrawerShowcase({ section }: DrawerShowcaseProps) {
                     data-motion-profile={effectiveVariant}
                   >
                     <div className="dialog-content__header">
-                      <div>
-                        <Dialog.Title className="dialog-title">Filters</Dialog.Title>
-                        <Dialog.Description className="dialog-description" id={descriptionId}>
-                          {activeVariantMeta.movement}
-                        </Dialog.Description>
-                      </div>
+                      <Dialog.Title className="dialog-title">Drawer</Dialog.Title>
                       <Dialog.Close asChild>
                         <button aria-label="Close preview drawer" className="icon-button" type="button">
                           ×
                         </button>
                       </Dialog.Close>
                     </div>
-
-                    <div className="drawer-fields">
-                      <div className="drawer-field">
-                        <span>Status</span>
-                        <strong>Active only</strong>
-                      </div>
-                      <div className="drawer-field">
-                        <span>Owner</span>
-                        <strong>Design systems</strong>
-                      </div>
-                      <div className="drawer-field">
-                        <span>Updated</span>
-                        <strong>Last 14 days</strong>
-                      </div>
-                    </div>
-
-                    <div className="dialog-actions">
-                      <Dialog.Close asChild>
-                        <button className="button button--secondary" type="button">
-                          Cancel
-                        </button>
-                      </Dialog.Close>
-                      <button className="button button--primary" type="button">
-                        Apply
-                      </button>
-                    </div>
+                    <Dialog.Description className="dialog-description" id={descriptionId}>
+                      Surface content lives here.
+                    </Dialog.Description>
                   </Dialog.Content>
                 </Dialog.Portal>
               </Dialog.Root>
@@ -173,16 +140,12 @@ export function DrawerShowcase({ section }: DrawerShowcaseProps) {
             </div>
 
             <div className="control-panel__block spec-card">
-              <p className="control-panel__label">Profile</p>
               <h2>{activeVariantMeta.label}</h2>
               <div className="metric-row" aria-label={`Selected timing: ${activeVariantMeta.summary}`}>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[0]}</span>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[1]}</span>
               </div>
-              <p>{activeVariantMeta.staging}</p>
-              <p className="spec-card__status">
-                {prefersReducedMotion ? 'Reduced profile active.' : activeVariantMeta.rationale}
-              </p>
+              <p>{prefersReducedMotion ? 'Reduced profile active.' : activeVariantMeta.staging}</p>
             </div>
           </aside>
         </div>
