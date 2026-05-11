@@ -1,4 +1,5 @@
 import type { MotionSection } from '../routes/content'
+import { useDocumentTitle } from './useDocumentTitle'
 
 type ComponentPlaceholderPageProps = {
   section: MotionSection
@@ -35,6 +36,7 @@ const stageContent: Record<
 }
 
 export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPageProps) {
+  useDocumentTitle(section.title)
   const stage = stageContent[section.slug]
 
   return (

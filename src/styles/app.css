@@ -259,13 +259,17 @@ small {
 .page-hero h1,
 .component-hero h1,
 .section-heading h2,
-.index-link h3,
+.index-link h2,
 .doc-block h2,
 .preview-stage__body h2,
 .control-panel h2,
 .dialog-title,
 .compact-list__item strong {
   margin: 0;
+}
+
+.index-link h2 {
+  font-size: 1.17rem;
 }
 
 .page-hero h1,
@@ -815,8 +819,19 @@ small {
   background: #fff9ee;
 }
 
+.control-panel__note {
+  margin: 10px 0 0;
+  color: #6c4a19;
+  font-size: 0.82rem;
+}
+
 .variant-chip {
   min-height: 40px;
+}
+
+.variant-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .variant-chip--active {

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
 import { liveMotionSections } from '../routes/content'
+import { useDocumentTitle } from './useDocumentTitle'
 
 export function OverviewPage() {
+  useDocumentTitle('Overview')
+
   return (
     <div className="page page--overview">
       <header className="page-hero page-hero--simple">
@@ -19,7 +22,7 @@ export function OverviewPage() {
         <div className="component-index">
           {liveMotionSections.map(section => (
             <Link className="index-link index-link--simple" key={section.slug} to={`/components/${section.slug}`}>
-              <h3>{section.title}</h3>
+              <h2>{section.title}</h2>
             </Link>
           ))}
         </div>
