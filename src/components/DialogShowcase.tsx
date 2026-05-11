@@ -3,7 +3,7 @@ import { useId, useRef, useState } from 'react'
 import type { MotionSection } from '../routes/content'
 import { useReducedMotionPreference } from './useReducedMotionPreference'
 
-type DialogVariant = 'standard' | 'snappy' | 'expressive' | 'reduced'
+type DialogVariant = 'standard' | 'snappy' | 'expressive' | 'slow' | 'reduced'
 
 type DialogVariantMeta = {
   label: string
@@ -17,6 +17,7 @@ const dialogVariants: { id: DialogVariant; label: string }[] = [
   { id: 'standard', label: 'Standard' },
   { id: 'snappy', label: 'Snappy' },
   { id: 'expressive', label: 'Expressive' },
+  { id: 'slow', label: 'Slow-mo' },
   { id: 'reduced', label: 'Reduced' },
 ]
 
@@ -41,6 +42,13 @@ const dialogVariantMeta: Record<DialogVariant, DialogVariantMeta> = {
     movement: 'Opacity with an 18px settle and a longer ease.',
     staging: 'Same start time, slightly more travel for added presence.',
     rationale: 'Useful when the modal change should feel more intentional.',
+  },
+  slow: {
+    label: 'Slow-mo',
+    summary: '880ms enter, 640ms exit',
+    movement: 'Standard choreography stretched roughly 4× for inspection.',
+    staging: 'Backdrop and surface still start together; pace exposes the easing.',
+    rationale: 'Inspection variant. Not for production use.',
   },
   reduced: {
     label: 'Reduced motion',
@@ -79,16 +87,11 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
           <div className="preview-stage">
             <div className="preview-stage__canvas preview-stage__canvas--dialog" ref={previewRef}>
               <Dialog.Root onOpenChange={setOpen} open={open}>
-                <div className="demo-surface">
-                  <span className="demo-surface__eyebrow">Centered overlay</span>
-                  <h2 className="demo-surface__title">Open dialog.</h2>
-                  <p className="demo-surface__copy">Backdrop and surface start together.</p>
-                  <Dialog.Trigger asChild>
-                    <button className="button button--primary" type="button">
-                      Open dialog
-                    </button>
-                  </Dialog.Trigger>
-                </div>
+                <Dialog.Trigger asChild>
+                  <button className="button button--primary" type="button">
+                    Open dialog
+                  </button>
+                </Dialog.Trigger>
                 <Dialog.Portal container={previewRef.current ?? undefined}>
                   <Dialog.Overlay
                     forceMount
@@ -102,33 +105,16 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
                     data-motion-profile={effectiveVariant}
                   >
                     <div className="dialog-content__header">
-                      <div>
-                        <Dialog.Title className="dialog-title">Confirm changes</Dialog.Title>
-                        <Dialog.Description className="dialog-description" id={descriptionId}>
-                          {activeVariantMeta.movement}
-                        </Dialog.Description>
-                      </div>
+                      <Dialog.Title className="dialog-title">Dialog</Dialog.Title>
                       <Dialog.Close asChild>
                         <button aria-label="Close preview dialog" className="icon-button" type="button">
                           ×
                         </button>
                       </Dialog.Close>
                     </div>
-
-                    <div className="dialog-copy">
-                      <p>{activeVariantMeta.staging}</p>
-                    </div>
-
-                    <div className="dialog-actions">
-                      <Dialog.Close asChild>
-                        <button className="button button--secondary" type="button">
-                          Cancel
-                        </button>
-                      </Dialog.Close>
-                      <button className="button button--primary" type="button">
-                        Apply
-                      </button>
-                    </div>
+                    <Dialog.Description className="dialog-description" id={descriptionId}>
+                      Surface content lives here.
+                    </Dialog.Description>
                   </Dialog.Content>
                 </Dialog.Portal>
               </Dialog.Root>
@@ -154,16 +140,12 @@ export function DialogShowcase({ section }: DialogShowcaseProps) {
             </div>
 
             <div className="control-panel__block spec-card">
-              <p className="control-panel__label">Profile</p>
               <h2>{activeVariantMeta.label}</h2>
               <div className="metric-row" aria-label={`Selected timing: ${activeVariantMeta.summary}`}>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[0]}</span>
                 <span className="metric-chip">{activeVariantMeta.summary.split(', ')[1]}</span>
               </div>
-              <p>{activeVariantMeta.movement}</p>
-              <p className="spec-card__status">
-                {prefersReducedMotion ? 'Reduced profile active.' : activeVariantMeta.rationale}
-              </p>
+              <p>{prefersReducedMotion ? 'Reduced profile active.' : activeVariantMeta.movement}</p>
             </div>
           </aside>
         </div>

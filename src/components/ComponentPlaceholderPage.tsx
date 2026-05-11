@@ -4,39 +4,7 @@ type ComponentPlaceholderPageProps = {
   section: MotionSection
 }
 
-const stageContent: Record<
-  string,
-  {
-    profile: string
-    scenario: string
-    frameClassName: string
-  }
-> = {
-  'dropdown-menu': {
-    profile: 'Snappy',
-    scenario: 'Open, close, repeated trigger, keyboard use.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--menu',
-  },
-  toast: {
-    profile: 'Standard',
-    scenario: 'Burst, dismiss, overlap, reduced motion.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--toast',
-  },
-  accordion: {
-    profile: 'Standard',
-    scenario: 'Repeated toggles, tall content, keyboard use.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--accordion',
-  },
-  tabs: {
-    profile: 'Snappy',
-    scenario: 'Rapid switching, active-state clarity.',
-    frameClassName: 'preview-stage__mock preview-stage__mock--tabs',
-  },
-}
-
 export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPageProps) {
-  const stage = stageContent[section.slug]
-
   return (
     <div className="page">
       <header className="component-hero">
@@ -50,7 +18,7 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
         <div className="preview-grid">
           <div className="preview-stage">
             <div className="preview-stage__canvas preview-stage__canvas--placeholder">
-              <div className={stage.frameClassName} aria-hidden="true" />
+              <div className="preview-stage__mock preview-stage__mock--toast" aria-hidden="true" />
             </div>
           </div>
 
@@ -67,8 +35,7 @@ export function ComponentPlaceholderPage({ section }: ComponentPlaceholderPagePr
             </div>
             <div className="control-panel__block spec-card">
               <p className="control-panel__label">Preview</p>
-              <h2>{stage.profile}</h2>
-              <p className="spec-card__status">{stage.scenario}</p>
+              <p className="spec-card__status">Coming soon — burst, dismiss, overlap, reduced motion.</p>
             </div>
           </aside>
         </div>
